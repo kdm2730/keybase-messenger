@@ -124,6 +124,18 @@ class Networking():
 		#tell the server that a new user has joined
 		self.send("USERNAME {0}".format(username))
 
+	def listener(self):
+		#a function run as a thread that listens for new messages
+		while self.listening:
+			data = ""
+			try:
+				data = self.socket.recv(1024)
+			except scoket.error:
+				"Unable to receive data"
+				self.handle_msg(data)
+				#dont need the while loop to be rediculously fast
+				time.sleep(0.1)
+
 	def listen(self):
 		#start the listening thread
 		self.listen_thread = threading.Thread(target=self.listener)

@@ -15,6 +15,7 @@ class Server():
 	def __init__(self, port):
 		#create a socket and bind it to a port
 		self.listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		self.listener.bind(('', port))
 		self.listener.listen(1)
 		print "Listening on port {0}".format(port)
 
@@ -83,7 +84,7 @@ class ClientListener(threading.Thread):
 		while self.listening:
 			data = ""
 			try:
-				data = slef.socket.recv(1024)
+				data = self.socket.recv(1024)
 			except socket.error:
 				"Unable to recieve data"
 			self.handle_msg(data)
@@ -106,7 +107,7 @@ class ClientListener(threading.Thread):
 		username_result = re.search('^USERNAME (.*)$', data)
 		if username_result:
 			self.username = username_result.group(1)
-			self.server.echo("{0} has joined.\n").format(self.username)
+			self.server.echo("{0} has joined.\n".format(self.username))
 		elif data == "QUIT":
 			#if the client has sent quit then close this thread
 			self.quit()
