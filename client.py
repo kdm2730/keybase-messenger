@@ -130,7 +130,7 @@ class Networking():
 			data = ""
 			try:
 				data = self.socket.recv(1024)
-			except scoket.error:
+			except socket.error:
 				"Unable to receive data"
 				self.handle_msg(data)
 				#dont need the while loop to be rediculously fast
